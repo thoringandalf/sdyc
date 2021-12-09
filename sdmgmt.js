@@ -90,11 +90,24 @@ else if(curMon==1){if(currentYear%4==0){numberOfDays=29}else{numberOfDays=28}}}
 const rfsCal=(goingUp)=>{if(goingUp){if(curMon==11){curMon=0;currentYear+=1}
 else{curMon+=1}}else{if(curMon==0){curMon=11;currentYear-=1}else{curMon-=1}}cmy.innerHTML=months[curMon]+' '+currentYear;refreshDateSlots()}
 const calculateFirstDay=()=>{let firstDate=new Date(currentYear,curMon,1);firstDay=firstDate.getDay()}
-const refreshDateSlots=()=>{calculateFirstDay();setNumberOfDays();let td=new Date();let t={day:td.getDate(),month:td.getMonth(),yr:td.getFullYear()}
-for(let i=0;i<42;i++){let slot=e(`slot_${i+1}`);slot.innerHTML='';slot.onclick=null}for(let i=1; i<numberOfDays+1;i++){let slot=e(`slot_${i+firstDay}`);slot.innerHTML=i;if(curMon==t.month&&currentYear==t.yr&&i==t.day){
-add(slot,'td')}else{rem(slot,'td')}}if(firstDay==5&&numberOfDays>30||firstDay==6&&numberOfDays>29){
-for(let i=36;i<43;i++){rem(e(`dateSlot_${i}`),'h')}}else{for(let i=36;i<43;i++){
-add(e(`dateSlot_${i}`),'h')}}refreshEvents()}
+const refreshDateSlots=()=>{
+	calculateFirstDay();
+	setNumberOfDays();
+	let td=new Date();
+	let t={	day:td.getDate(), month:td.getMonth(), yr:td.getFullYear() }
+	for(let i=0;i<42;i++){
+		let slot=e(`slot_${i+1}`);slot.innerHTML='';
+		slot.onclick=null
+	}
+	for(let i=1; i<numberOfDays+1;i++){
+		let slot=e(`slot_${i+firstDay}`);
+		slot.innerHTML=i;
+		if(curMon==t.month&&currentYear==t.yr&&i==t.day){add(slot,'td')}
+		else{rem(slot,'td')}}
+		if(firstDay==5&&numberOfDays>30||firstDay==6&&numberOfDays>29){
+			for(let i=36;i<43;i++){rem(e(`dateSlot_${i}`),'h')}}
+		else{
+			for(let i=36;i<43;i++){add(e(`dateSlot_${i}`),'h')}}refreshEvents()}
 const clearEvents=()=>{for(let i=0;i<3;i++){let nodesToRemove=document.getElementsByClassName(`${eventTypes[i]}Event`);let nodesToRemoveArr=[];
 for(node of nodesToRemove){nodesToRemoveArr.push(node)}nodesToRemoveArr.map((node) => {node.parentNode.removeChild(node)})}}
 const fillPopup=(data,type)=>{let eventDate=new Date(data.year,data.month,data.day);let dayOfWeek=days[eventDate.getDay()];
