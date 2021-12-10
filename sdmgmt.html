@@ -89,12 +89,12 @@ e('hb').onclick=()=>{switchSlide(0)}
 e('ab').onclick=()=>{switchSlide(1)}
 
 const switchSlide=(to)=>{
-	rem(side[to], 'h'); 
-    	add(b[to], 's'); 
-    	add(side[(to + 1) % 2], 'h'); 
-    	rem(b[(to + 1) % 2], 's'); 
-    	add(side[(to + 2) % 2], 'h'); 
-    	rem(b[(to + 2) % 2], 's') 
+	add(b[to], 's');
+	rem(side[to], 'h')
+	let tr = 0;
+	if (to === 0) { tr = 1}
+	add(side[tr], 'h')
+	rem(b[tr], 's')
 }
 
 const changeSwitchStyling=(num,el)=>{
