@@ -81,9 +81,7 @@ scn.onclick=()=>{closePopup()}
 pendS.onclick=()=>{flipSwitch(0)}
 acceptS.onclick=()=>{flipSwitch(1)}
 bookS.onclick=()=>{ flipSwitch(2)}
-pop.accB.onclick=()=>{transferEvent('pending','accepted',false)}
-pop.bookB.onclick=()=>{transferEvent('accepted','booked',false)}
-pop.canB.onclick=()=>{transferEvent(`${eventTypes[selectedEventType]}`,`${eventTypes[selectedEventType]}Canceled`,true)}
+
 editB.onclick=()=>{if(edit){updateAvail()}else if(!edit){enableSettings()}}
 e('nb').onclick=()=>{e('sb').style.left='0px'}
 e('xb').onclick=()=>{e('sb').style.left='-275px'}
