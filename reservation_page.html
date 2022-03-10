@@ -1,0 +1,140 @@
+<script>
+  
+// Load URL Param
+  
+let ct = null; // ct stands for 'charter type'
+if(tp !== 3) {
+	ct = parseInt(tour_type) + 2;
+} else if (tour_type === 3) {
+	ct = 1.5;
+}
+  
+// Google Firestore Configuration
+  
+let firebaseConfig={
+  apiKey:"AIzaSyBBX2ENxIX4LkpJUAJPyFXjbHTl9Orm1vc",
+  authDomain:"sdyc-192f7.firebaseapp.com",
+  projectId:"sdyc-192f7",storageBucket:"sdyc-192f7.appspot.com",
+  messagingSenderId:"301361682532",
+  appId:"1:301361682532:web:7c63df90592c36c9bfe771"
+}
+firebase.initializeApp(firebaseConfig);
+let db=firebase.firestore()
+  
+// Utility Functions
+  
+let e=(el)=>{return document.getElementById(el)}
+
+// Global Constants
+
+const months=["January","February","March","April","May","June","July","August","September","October","November","December"]
+const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+
+const charterType=e("charterType")
+const emailField=e("email")
+const phoneField=e("phoneField")
+const fnameField=e("firstNameField")
+const lnameField=e("lastNameField")
+const dateTimeField=e("resDateTime")
+const timeField=e("timeField")
+const numPassengers=e("nop")
+const notesField=e("notes")
+const timeSlots=e("timeSlots")
+const left=e('left')
+const right=e('right')
+
+// Global Variables 
+
+let form={
+  yachtType:"",
+  idt:"",
+  rate:null,
+  id:"",
+  whenPretty:"",
+  charterType:"",
+  firstName:"",
+  lastName:"",
+  email:"",
+  phone:null,
+  startHr:null,
+  startMin:null,
+  day:null,
+  month:null,
+  year:null,
+  duration:null,
+  numPassengers:null,
+  notes:"",
+  dateCreated:null
+}
+let currentDay=1;
+let currentMonth=2;
+let currentYear=2021;
+let currentCharter=ct;
+let currentTime="";
+let numberOfDays=0;
+let firstDay=0;
+let prevPhoneLength=0;
+let currentSlot=0;
+let today={
+  day: null, month: null, yr: null, dow:null
+}
+let cb='Dragonfly'
+
+// Event Listners
+
+e('rightArrow').onclick=()=>{refreshCalendar(true)}
+e('leftArrow').onclick=()=>{null}
+
+charterType.onchange=()=>{
+  currentCharter=charterType.value;
+  currentHr=null;
+  currentMin=null;
+  timeField.innerHTML="";
+  if(currentSlot!=0){
+    e(`tSlot${currentSlot}`).classList.remove('isSelected')
+  }
+  refreshDateSlots();
+  if(new Date(currentYear,currentMonth, currentDay).getDay()==6 && currentCharter==1.5){
+    dateTimeField.innerHTML="Select from calendar";
+    for(let i=1; i<49; i++){
+      e(`tSlot${i}`).classList.add("isHidden")
+    }
+  }
+  else{
+    if(numPassengers.value>6){getAvailableTimes("operatingHrsB")}
+    else{getAvailableTimes()
+}}}
+
+e('requestCharter').onclick=()=>{handleCharterRequest()}
+
+left.onclick=()=>{left.classList.add("isHidden");right.classList.remove("isHidden")}
+right.onclick=()=>{right.classList.add("isHidden");left.classList.remove("isHidden")}
+
+// Main
+
+const setNumberOfDays=()=>{
+  if(currentMonth<7 && currentMonth%2==0 || currentMonth>6 && currentMonth%2==1){ numberOfDays=31 }
+  else if(currentMonth!=1&&(currentMonth<6&&currentMonth%2==1||currentMonth>7&&currentMonth%2==0)){numberOfDays=30}
+  else if (currentMonth==1){if(currentYear%4==0){numberOfDays=29}else{numberOfDays=28}}
+}
+
+const refreshCalendar=(goingUp)=>{
+  if(goingUp){
+    if(currentMonth==11){currentMonth=0;currentYear+=1}
+    else{currentMonth+=1}
+  }
+  else{
+    if(currentMonth==0){
+      currentMonth=11;
+      currentYear-=1
+    }
+    else{currentMonth-=1}
+  }
+  e('calendarMonthYear').innerHTML=months[currentMonth]+" "+currentYear;
+  if(currentYear==today.yr&&currentMonth==today.month){
+    e('leftArrow').classList.add('blocked'); e('leftArrow').onclick=()=>{null}}
+else{e("leftArrow").onclick=()=>{refreshCalendar(false)};e("leftArrow").classList.remove('blocked');}
+refreshDateSlots()}
+
+
+</script>
