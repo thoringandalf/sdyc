@@ -1,0 +1,33 @@
+<script type="text/javascript">
+	
+alert('this works');
+
+// Google Firestore Configuration
+
+let fbConfig = { 
+  apiKey: 'AIzaSyBBX2ENxIX4LkpJUAJPyFXjbHTl9Orm1vc',
+  authDomain:'sdyc-192f7.firebaseapp.com',
+  projectId:'sdyc-192f7',
+  storageBucket:'sdyc-192f7.appspot.com',
+  messagingSenderId:'301361682532',
+  appId:'1:301361682532:web:7c63df90592c36c9bfe771'
+}
+firebase.initializeApp(fbConfig);
+let db=firebase.firestore();
+  
+db.collection("booked").get().then((docs) => {
+  let ids=[]
+  docs.forEach((doc)=>{		
+    db.collection("accepted").doc(doc.id).delete().then(()=>{
+    })
+    .catch(()=>{null})
+  })
+})
+
+// Utility Functions
+
+const e=(el)=>{return document.getElementById(el)}
+const add=(el,cn)=>{el.classList.add(cn)}
+const rem=(el,cn)=>{el.classList.remove(cn)}
+
+</script>
