@@ -23,7 +23,7 @@ const rem=(el,cn)=>{el.classList.remove(cn)}
 
 // Main
 
-boats_ref.get().then((documents) => {
+boats_ref.where("Length","<",50).get().then((documents) => {
   documents.forEach((doc) => {
     console.log(doc.id)
   })
