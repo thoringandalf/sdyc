@@ -21,12 +21,19 @@ const e=(el)=>{return document.getElementById(el)}
 const add=(el,cn)=>{el.classList.add(cn)}
 const rem=(el,cn)=>{el.classList.remove(cn)}
 
+// Global Variables
+
+let capacity_filters = [];
+let boat_type_filters = [];
+
 // Main
 
-boats_ref.where("Length",">",50).get().then((documents) => {
-  documents.forEach((doc) => {
-    console.log(doc.id)
-  })
+boats_ref
+  .where("Length",">",50)
+  .get().then((documents) => {
+   documents.forEach((doc) => {
+     console.log(doc.id)
+   })
 })
 
   
