@@ -1,8 +1,9 @@
 <script type="text/javascript">
 
 // Google Firestore Configuration
+  import { collection, query, where, getDocs } from "firebase/firestore";
 
-let fbConfig = { 
+  let fbConfig = { 
   apiKey: "AIzaSyCKglbCZu9tlbuuTDII5K5BbMC1j1cYC_I",
   authDomain: "sdyc-v2.firebaseapp.com",
   projectId: "sdyc-v2",
