@@ -13,6 +13,7 @@ let fbConfig = {
 }
 firebase.initializeApp(fbConfig);
 let db=firebase.firestore();
+const boats_ref = db.collection("Boats");
 
 // Utility Functions
 
@@ -22,10 +23,10 @@ const rem=(el,cn)=>{el.classList.remove(cn)}
 
 // Main
 
-db.collection("Boats").get().then((documents) => {
-  documents.forEach((doc) => {
-    console.log(doc.id)
-  })
-})
+const boats_query = query(boats_ref, where("Max Capcity","<",48));
 
+console.log(boats_query);
+
+  
+  
 </script>
