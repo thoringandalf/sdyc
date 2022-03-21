@@ -1,7 +1,6 @@
 <script type="text/javascript">
 
 // Google Firestore Configuration
-  import { collection, query, where, getDocs } from "firebase/firestore";
 
   let fbConfig = { 
   apiKey: "AIzaSyCKglbCZu9tlbuuTDII5K5BbMC1j1cYC_I",
@@ -24,9 +23,11 @@ const rem=(el,cn)=>{el.classList.remove(cn)}
 
 // Main
 
-const boats_query = query(boats_ref, where("Max Capcity","<",48));
-
-console.log(boats_query);
+boats_ref.get().then((documents) => {
+  documents.forEach((doc) => {
+    console.log(doc.id)
+  })
+})
 
   
   
