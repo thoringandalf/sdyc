@@ -22,7 +22,7 @@ const rem=(el,cn)=>{el.classList.remove(cn)}
 
 // Main
 
-db.collection("Boats").where("Max Capacity","<",13).get().then((documents) => {
+db.collection("Boats").where("Max Capacity","==",13).get().then((documents) => {
   documents.forEach((doc) => {
     console.log(doc.id)
   })
