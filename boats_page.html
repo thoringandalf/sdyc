@@ -30,7 +30,7 @@ let boat_type_filters = [];
 
 boats_ref
   .where("Length",">",50)
-  .where("length","<",60)
+  .where("Length","<",60)
   .get().then((documents) => {
    documents.forEach((doc) => {
      console.log(doc.id)
