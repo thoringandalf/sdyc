@@ -15,7 +15,7 @@ const isLeapYear = () => {
 	return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 }
 
-
+// getFirstDay()
 
 const daysInMonth = (month, year) => {
 	return new Date(year, month + 1, 0).getDate();
@@ -83,12 +83,15 @@ const changeMonth = (direction) => {
   }
   populateCalendarHeading();
   populateDateCards();
+  renderMainRequests();
+  renderExternalRequests();
 }
 
 const switchToggles = (x) => {
   togglesConfig[x] = !togglesConfig[x];
   fillToggles();
   renderMainRequests();	
+  renderExternalRequests();
 }
 
 /*** *** DOM MANIPULATION *** ***/
