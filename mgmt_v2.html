@@ -88,8 +88,9 @@ const changeMonth = (direction) => {
 }
 
 const switchToggles = (x) => {
-	togglesConfig[x] = !togglesConfig[x];
+  togglesConfig[x] = !togglesConfig[x];
   fillToggles();
+  renderMainRequests();	
 }
 
 /*** *** DOM MANIPULATION *** ***/
