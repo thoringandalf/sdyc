@@ -107,7 +107,7 @@ const switchSidebarTabs = (x) => {
 }
 
 const fillToggles = () => {
-	for (let i=0; i<3; i++) {
+	for (let i=0; i<4; i++) {
   	if (togglesConfig[i] === false) {
     	e(`toggleBox${i}`).classList.add("clearedToggle");
       e(`toggleBox${i}`).classList.remove(`toggleBox{i}`)
@@ -136,6 +136,7 @@ e("tab_2").onclick = () => { switchSidebarTabs(2) }
 e("toggle0").onclick = () => { switchToggles(0) }
 e("toggle1").onclick = () => { switchToggles(1) }
 e("toggle2").onclick = () => { switchToggles(2) }
+e("toggle3").onclick = () => { switchToggles(3) }
 
 /*** *** ON PAGE LOAD-UP *** ***/
 
