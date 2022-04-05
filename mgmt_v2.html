@@ -147,7 +147,7 @@ const openAddCharterForm = () => {
   e('charterType').firstChild.selected = false;
 }
 
-/*** *** DATABASE DEPENDANT RENDERERS *** ***/
+/*** *** DATABASE DEPENDENT RENDERERS *** ***/
 
 const addVesselSelections = () => {
 	while(e("vessel").childElementCount > 3) {
@@ -200,6 +200,7 @@ const renderMainRequests = () => {
       		slat.classList.add("div-block-175", `${styleCats[i]}Slat`);
       		slat.innerHTML = `${d.time} · ${d.vessel}`;
           slat.setAttribute("id", req.id)
+		slat.setAttribute("vessel", req.vessel)
       		e(`ds${getFirstDay() + d.dateInt - 1}`).classList.add("div-block-165")
       		e(`ds${getFirstDay() + d.dateInt - 1}`).appendChild(slat)
         })
@@ -221,6 +222,7 @@ const renderExternalRequests = () => {
               slat.classList.add("div-block-175", 'externalSlat');
               slat.innerHTML = `${d.time} · ${d.vessel.substring(0,13)}`;
               slat.setAttribute("id", req.id)
+		    slat.setAttribute("vessel", req.vessel)
               e(`ds${getFirstDay() + d.dateInt - 1}`).classList.add("div-block-165")
               e(`ds${getFirstDay() + d.dateInt - 1}`).appendChild(slat)
             })
