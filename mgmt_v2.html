@@ -126,7 +126,182 @@ const highlightToday = () => {
   }
 }
 
-/*** *** BUTTON EVENT LISTENERS *** ***/
+e('date').type = 'date';
+e('time').type = 'time';
+e('time').setAttribute('step','1800')
+
+const closeAddCharterForm = () => { 
+	e('sectionAddCharter').style.display = "none" 
+ 	e('wf-form-Add-Charter-Form').reset();
+ }
+
+const openAddCharterForm = () => { 
+	e('sectionAddCharter').style.opacity = 100;
+	e('sectionAddCharter').style.display = "flex";
+  addVesselSelections();
+  e('groupSize').firstChild.setAttribute("disabled", "disabled")
+  e('vessel').firstChild.setAttribute("disabled", "disabled")
+  e('charterType').firstChild.setAttribute("disabled", "disabled")
+  e('groupSize').firstChild.selected = false;
+  e('vessel').firstChild.selected = false;
+  e('charterType').firstChild.selected = false;
+}
+
+/*** *** DATABASE DEPENDANT RENDERERS *** ***/
+
+const addVesselSelections = () => {
+	while(e("vessel").childElementCount > 3) {
+  	e("vessel").removeChild(e("vessel").lastChild)
+  }
+	boats.where("Available","==",true).get().then((documents) => {
+  	documents.forEach((doc) => {
+    	if (doc.id != "Dragonfly" && doc.id != "Sundancer") {
+      	let option = document.createElement("option");
+      	option.innerHTML = doc.id;
+      	option.value = doc.id;
+      	e("vessel").appendChild(option);
+      }
+    })
+  })
+}
+
+const changeCapacitySelections = () => {
+	while(e("groupSize").childElementCount > 1) {
+  	e("groupSize").removeChild(e("groupSize").lastChild)
+  }
+  boats.doc(e("vessel").options[e("vessel").selectedIndex].text).get().then((doc) => {
+  	let boat = doc.data();
+    for(let i=0; i<boat["Max Capacity"]; i++) {
+    	let option = document.createElement("option");
+      option.innerHTML = i+1;
+      option.value = i+1;
+      e("groupSize").appendChild(option)
+    }
+  })
+}
+
+const clearSlats = () => {
+	let slats = document.querySelectorAll(".div-block-175");
+  slats.forEach((slat) => {
+  	slat.remove()
+  })
+}
+
+const renderMainRequests = () => {
+	clearSlats();
+	let reqCats = ["Pending Requests", "Accepted Requests", "Booked Charters"];
+  let styleCats = ["pending", "accepted", "booked"]
+  for(let i=0; i<3; i++) {
+  	if(togglesConfig[i]) {
+    	boats.doc("Dragonfly").collection(reqCats[i]).where("monthInt","==",displayedMonth).where("yearInt","==",displayedYear).orderBy("time").get().then((reqsBatch) => {
+        reqsBatch.docs.map((req) => {
+        	let d = req.data();
+    			let slat = document.createElement("div");
+      		slat.classList.add("div-block-175", `${styleCats[i]}Slat`);
+      		slat.innerHTML = `${d.time} · ${d.vessel}`;
+          slat.setAttribute("id", req.id)
+      		e(`ds${getFirstDay() + d.dateInt - 1}`).classList.add("div-block-165")
+      		e(`ds${getFirstDay() + d.dateInt - 1}`).appendChild(slat)
+        })
+      })
+    }
+  }
+}
+
+const renderExternalRequests = () => {
+	if (togglesConfig[3]) {
+  	boats.get().then((boatsBatch) => {
+    	for(let i=0; i<boatsBatch.docs.length; i++) {
+      	let boat = boatsBatch.docs[i];
+      	if(boat.id !== "Dragonfly" && boat.id !== "Sundancer") {
+        	boats.doc(boat.id).collection("Pending Requests").where("monthInt","==",displayedMonth).where("yearInt","==",displayedYear).orderBy("time").get().then((reqsBatch) => {
+            reqsBatch.docs.map((req) => {
+              let d = req.data();
+              let slat = document.createElement("div");
+              slat.classList.add("div-block-175", 'externalSlat');
+              slat.innerHTML = `${d.time} · ${d.vessel.substring(0,13)}`;
+              slat.setAttribute("id", req.id)
+              e(`ds${getFirstDay() + d.dateInt - 1}`).classList.add("div-block-165")
+              e(`ds${getFirstDay() + d.dateInt - 1}`).appendChild(slat)
+            })
+        	})
+        } 
+      }
+  	})
+  }
+}
+
+/*** *** DATABASE MANAGEMENT *** ***/
+
+const initializeRequests = () => {
+	let sampleRequest = {
+  	firstName: "Donald",
+    lastName: "Duck",
+    email: "donaldDuck@gmail.com",
+    phone: "3333333333",
+    date: null,
+    time: "8:00",
+    charterType: "Charter Type",
+    vessel: null,
+    groupSize: 5,
+    notes: "This is a test request. Please ignore.",
+    invoiceNumber: `220327MS6K`,
+    monthInt: 3,
+    dateInt: null,
+    yearInt: 2022
+  }
+  boats.get().then((batchBoats) => {
+  	batchBoats.docs.map((boat, index) => {
+    	sampleRequest.date = `2022-04-0${index}`;
+      sampleRequest.dateInt = index;
+      sampleRequest.vessel = boat.id;
+      boats.doc(boat.id).collection("Booked Charters").add(sampleRequest)
+    })
+  })
+}
+
+const addCharter = () => {
+	boats.doc(e("vessel").options[e("vessel").selectedIndex].text).collection("Pending Requests").add({
+  	firstName: e('firstName').value,
+    lastName: e('lastName').value,
+    phone: e('phone').value,
+    email: e('email').value,
+    date: e('date').value,
+    time: e('time').value,
+    monthInt: parseInt(e('date').value.substring(5,7))-1,
+    dateInt: parseInt(e('date').value.substring(8)),
+    yearInt: parseInt(e('date').value.substring(0,4)),
+    vessel: e('vessel').value,
+    charterType: e('charterType').options[e('charterType').selectedIndex].text,
+    groupSize: parseInt(e('groupSize').options[e('groupSize').selectedIndex].text),
+    notes: e('notes').value
+  }).then((docRef) => {
+  	let docRefID = docRef.id;
+    e('sectionAddCharter').style.opacity = 0;
+    docRef.update({
+      invoiceNumber: `${todaysYear.toString().substring(2,4)}${(todaysMonth+1).toString().padStart(2,"0")}${todaysDate.toString().padStart(2,"0")}${docRefID.substring(0,4)}`
+    }).then(() => {
+    	closeAddCharterForm();
+      renderMainRequests();
+      renderExternalRequests();
+    })
+  })
+}
+
+const cleanupDB = () => {
+	boats.get().then((boatsBatch) => {
+  	boatsBatch.docs.map((boat) => {
+    	boats.doc(boat.id).collection("Accepted Requests").get().then((req, i) => {
+      	if(i!=0) {
+        	boats.doc(boat.id).collection("Accepted Requests").doc(req.id).delete()
+        }
+      })
+    })
+    
+  })
+}
+
+/*** *** EVENT LISTENERS *** ***/
 
 e("monthArrowLeft").onclick = () => { changeMonth("backward") }
 e("monthArrowRight").onclick = () => { changeMonth("forward") }
@@ -139,6 +314,17 @@ e("toggle0").onclick = () => { switchToggles(0) }
 e("toggle1").onclick = () => { switchToggles(1) }
 e("toggle2").onclick = () => { switchToggles(2) }
 e("toggle3").onclick = () => { switchToggles(3) }
+
+e('buttonNewCharter').onclick = () => { openAddCharterForm() }
+e('buttonCloseCharter').onclick = () => { closeAddCharterForm() }
+e('screenAddCharter').onclick = () => { closeAddCharterForm() }
+
+e('wf-form-Add-Charter-Form').addEventListener("submit", (event) => {
+  event.preventDefault();
+  addCharter();
+})
+
+e("vessel").onchange = () => { changeCapacitySelections() }
 
 /*** *** ON PAGE LOAD-UP *** ***/
 
