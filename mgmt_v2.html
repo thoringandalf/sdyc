@@ -204,7 +204,7 @@ const renderMainRequests = () => {
 		slat.setAttribute("reqType", reqCats[i])
       		e(`ds${getFirstDay() + d.dateInt - 1}`).classList.add("div-block-165")
       		e(`ds${getFirstDay() + d.dateInt - 1}`).appendChild(slat)
-		slat.addEventListener("click", () => { populateReqCard(req.id, reqCats[i], d.vessel) })
+		slat.addEventListener("click", () => { populateReqCard(req.id, reqCats[i], d.vessel, styleCats[i]) })
         })
       })
     }
@@ -228,6 +228,7 @@ const renderExternalRequests = () => {
 		    slat.setAttribute("reqType", "Pending Requests")
               e(`ds${getFirstDay() + d.dateInt - 1}`).classList.add("div-block-165")
               e(`ds${getFirstDay() + d.dateInt - 1}`).appendChild(slat)
+		    slat.addEventListener("click", () => { populateReqCard(req.id, reqCats[i], d.vessel, "external") })
             })
         	})
         } 
