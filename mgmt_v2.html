@@ -202,9 +202,9 @@ const renderMainRequests = () => {
           	slat.setAttribute("id", req.id)
 		slat.setAttribute("vessel", req.vessel)
 		slat.setAttribute("reqType", reqCats[i])
-		slat.onclick(() => { populateReqCard(req.id, req.charterType, req.vessel) })
       		e(`ds${getFirstDay() + d.dateInt - 1}`).classList.add("div-block-165")
       		e(`ds${getFirstDay() + d.dateInt - 1}`).appendChild(slat)
+		slat.onclick(() => { populateReqCard(req.id, req.charterType, req.vessel) })
         })
       })
     }
