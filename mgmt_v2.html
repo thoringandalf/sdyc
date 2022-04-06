@@ -198,7 +198,7 @@ const renderMainRequests = () => {
         	let d = req.data();
     			let slat = document.createElement("div");
       		slat.classList.add("div-block-175", `${styleCats[i]}Slat`);
-      		slat.innerHTML = `${d.time} · ${d.vessel}`;
+      		slat.innerHTML = `${beautify(d.time)} · ${d.vessel}`;
           	slat.setAttribute("id", req.id)
 		slat.setAttribute("vessel", d.vessel)
 		slat.setAttribute("reqType", reqCats[i])
@@ -222,7 +222,7 @@ const renderExternalRequests = () => {
               let d = req.data();
               let slat = document.createElement("div");
               slat.classList.add("div-block-175", 'externalSlat');
-              slat.innerHTML = `${d.time} · ${d.vessel.substring(0,13)}`;
+              slat.innerHTML = `${beautify(d.time)} · ${d.vessel.substring(0,13)}`;
               slat.setAttribute("id", req.id)
 		    slat.setAttribute("vessel", d.vessel)
 		    slat.setAttribute("reqType", "Pending Requests")
