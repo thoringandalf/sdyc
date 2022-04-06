@@ -273,7 +273,7 @@ const addCharter = () => {
     phone: e('phone').value,
     email: e('email').value,
     date: e('date').value,
-    time: e('time').value,
+    time: e('time').value.padStart(5,"0"),
     monthInt: parseInt(e('date').value.substring(5,7))-1,
     dateInt: parseInt(e('date').value.substring(8)),
     yearInt: parseInt(e('date').value.substring(0,4)),
