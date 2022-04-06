@@ -204,8 +204,7 @@ const renderMainRequests = () => {
 		slat.setAttribute("reqType", reqCats[i])
       		e(`ds${getFirstDay() + d.dateInt - 1}`).classList.add("div-block-165")
       		e(`ds${getFirstDay() + d.dateInt - 1}`).appendChild(slat)
-		console.log("renderMainRequests(): ", slat)
-		//slat.onclick(() => { populateReqCard(req.id, req.charterType, req.vessel) })
+		slat.addEventListener("click", () => { populateReqCard(req.id, req.charterType, req.vessel) })
         })
       })
     }
