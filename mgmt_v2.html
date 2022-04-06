@@ -200,7 +200,7 @@ const renderMainRequests = () => {
       		slat.classList.add("div-block-175", `${styleCats[i]}Slat`);
       		slat.innerHTML = `${d.time} · ${d.vessel}`;
           	slat.setAttribute("id", req.id)
-		slat.setAttribute("vessel", req.vessel)
+		slat.setAttribute("vessel", d.vessel)
 		slat.setAttribute("reqType", reqCats[i])
       		e(`ds${getFirstDay() + d.dateInt - 1}`).classList.add("div-block-165")
       		e(`ds${getFirstDay() + d.dateInt - 1}`).appendChild(slat)
@@ -225,7 +225,7 @@ const renderExternalRequests = () => {
               slat.classList.add("div-block-175", 'externalSlat');
               slat.innerHTML = `${d.time} · ${d.vessel.substring(0,13)}`;
               slat.setAttribute("id", req.id)
-		    slat.setAttribute("vessel", req.vessel)
+		    slat.setAttribute("vessel", d.vessel)
 		    slat.setAttribute("reqType", "Pending Requests")
               e(`ds${getFirstDay() + d.dateInt - 1}`).classList.add("div-block-165")
               e(`ds${getFirstDay() + d.dateInt - 1}`).appendChild(slat)
