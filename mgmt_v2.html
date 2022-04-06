@@ -228,7 +228,7 @@ const renderExternalRequests = () => {
 		    slat.setAttribute("reqType", "Pending Requests")
               e(`ds${getFirstDay() + d.dateInt - 1}`).classList.add("div-block-165")
               e(`ds${getFirstDay() + d.dateInt - 1}`).appendChild(slat)
-		    slat.addEventListener("click", () => { populateReqCard(req.id, reqCats[i], d.vessel, "external") })
+		    slat.addEventListener("click", () => { populateReqCard(req.id, "Pending Requests", d.vessel, "external") })
             })
         	})
         } 
