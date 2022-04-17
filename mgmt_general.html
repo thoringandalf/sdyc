@@ -244,6 +244,15 @@ const togglePrices = (bool) => {
   }
 }
 
+/*** *** EVENT LISTENERS *** ***/
+
+e('buttonEditDays').addEventListener("click", () => { toggleDays(true) })
+e('buttonEditBoats').addEventListener("click", () => { toggleBoats(true) })
+e('buttonEditPrices').addEventListener("click", () => { togglePrices(true) })
+e('buttonUpdateDays').addEventListener("click", () => { toggleDays(false); updateDaysBoxes() })
+e('buttonUpdateBoats').addEventListener("click", () => { toggleBoats(false); updateBoatBoxes() })
+e('buttonUpdatePrices').addEventListener("click", () => { togglePrices(false); updatePrices() })
+
 /*** *** ON PAGE LOAD-UP *** ***/
 
 initializeDateVars();
