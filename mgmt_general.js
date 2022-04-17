@@ -69,71 +69,7 @@ let fbConfig = {
     numberOfCards = numberOfRows * 7;
   }
   
-  /*** *** CLIENT-SIDE DATA-FILL FUNCTIONS *** ***/
   
-  const populateCalendarHeading = () => {
-    e("monthLabelCal").innerHTML = monthsOfYear[displayedMonth];
-    e("yearLabelCal").innerHTML = displayedYear;
-  }
-  
-  const generateDateCards = () => {
-    calcNumberOfCards();
-    for (let i = 0; i < numberOfCards; i++) {
-      let label = document.createElement("div");
-      label.classList.add("labeldatesquare");
-      label.setAttribute('id',`lds${i}`);
-      let card = document.createElement("div");
-      card.classList.add("datesquare");
-      card.setAttribute('id',`ds${i}`);
-      card.appendChild(label);
-      e("gridCalendar").appendChild(card);
-    }
-  }
-  
-  const destroyDateCards = () => {
-    for (let i = 0; i < numberOfCards; i++) {
-      e("gridCalendar").removeChild(e(`ds${i}`))
-    }
-  }
-  
-  const populateDateCards = () => {
-    destroyDateCards();
-    generateDateCards();
-    let firstDay = getFirstDay();
-    for (let i = firstDay; i < firstDay + daysInMonth(displayedMonth, displayedYear); i++) {
-      e(`lds${i}`).innerHTML = i - firstDay + 1
-    }
-    highlightToday();
-  }
-  
-  const changeMonth = (direction) => {
-    if (direction === "forward") {
-      if (displayedMonth === 11) {
-        displayedMonth = 0;
-        displayedYear++;
-      } else {
-        displayedMonth++
-      }
-    } else if (direction === "backward") {
-      if (displayedMonth == 0) {
-        displayedMonth = 11;
-        displayedYear--;
-      } else {
-        displayedMonth--
-      }
-    }
-    populateCalendarHeading();
-    populateDateCards();
-    renderMainRequests();
-    renderExternalRequests();
-  }
-  
-  const switchToggles = (x) => {
-    togglesConfig[x] = !togglesConfig[x];
-    fillToggles();
-    renderMainRequests();	
-    renderExternalRequests();
-  }
   
   /*** *** DATABASE DEPENDENT RENDERERS *** ***/
   
