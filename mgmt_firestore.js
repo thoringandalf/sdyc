@@ -1,4 +1,4 @@
-<script>
+
 	
 /*** *** INITIALIZE DATABASE *** ***/
 	
@@ -307,4 +307,4 @@ const updateBoatBoxes = () => {
   })
 }
 
-</script>
+
