@@ -202,6 +202,48 @@ const positionReqCard = (id) => {
     }
 }
 
+const toggleDays = (bool) => {
+	let boxes = document.querySelectorAll(".daysbox");
+  boxes.forEach((box) => {
+  	box.disabled = !bool
+  })
+  if(bool) { 
+  	e('buttonEditDays').style.display = "none";  
+    e('buttonUpdateDays').style.display = "inline-block";  
+  } else { 
+  	e('buttonUpdateDays').style.display = "none";  
+    e('buttonEditDays').style.display = "inline-block";  
+  }
+}
+
+const toggleBoats = (bool) => {
+	let boxes = document.querySelectorAll(".boatbox");
+  boxes.forEach((box) => {
+  	box.disabled = !bool
+  })
+  if(bool) { 
+  	e('buttonEditBoats').style.display = "none";  
+    e('buttonUpdateBoats').style.display = "inline-block";  
+  } else { 
+  	e('buttonUpdateBoats').style.display = "none";  
+    e('buttonEditBoats').style.display = "inline-block";  
+  }
+}
+
+const togglePrices = (bool) => {
+ 	let inputs = document.querySelectorAll(".priceinput");
+  inputs.forEach((input) => {
+  	input.disabled = !bool
+  })
+  if(bool) { 
+  	e('buttonEditPrices').style.display = "none";  
+    e('buttonUpdatePrices').style.display = "inline-block";  
+  } else { 
+  	e('buttonUpdatePrices').style.display = "none";  
+    e('buttonEditPrices').style.display = "inline-block";  
+  }
+}
+
 /*** *** ON PAGE LOAD-UP *** ***/
 
 initializeDateVars();
