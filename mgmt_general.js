@@ -12,65 +12,8 @@ let fbConfig = {
   firebase.initializeApp(fbConfig);
   let db=firebase.firestore();
   const boats = db.collection("Boats");
-  
-  
-  /*** *** CLIENT-SIDE UTILITY FUNCTIONS *** ***/
-  
-  const initializeDateVars = () => {
-    todaysMonth = today.getMonth();
-    todaysDate = today.getDate();
-    todaysYear = today.getFullYear();
-    displayedMonth = todaysMonth;
-    displayedYear = todaysYear;
-  }
-  
-  const isLeapYear = () => {
-    return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
-  }
-  
-  const e = (idName) => { return document.getElementById(idName) }
-  
-  const getFirstDay = () => {
-      let date = new Date(`${monthsOfYear[displayedMonth]} 01, ${displayedYear}`);
-    return date.getDay();
-  }
-  
-  const beautify = (when) => {
-      if(when.length > 5) {
-        let month = monthsOfYear[parseInt(when.substring(5,7))-1];
-      let date = when.substring(8);
-      let year = when.substring(0,4);
-      return (`${month} ${date}, ${year}`)
-    } else {
-        let hour = parseInt(when.substring(0,2));
-      let minute = when.substring(3);
-      let mode = 'AM';
-      if (hour == 0) {
-          hour = 12
-      }
-      if (hour >= 12) {
-          mode = 'PM'
-      }
-      if (hour >12) {
-          hour = hour - 12
-      }
-      return (`${hour}:${minute} ${mode}`)
-    }
-  }
-  
-  const daysInMonth = (month, year) => {
-    return new Date(year, month + 1, 0).getDate();
-  }
-  
-  const calcNumberOfCards = () => {
-    let numberOfDays = daysInMonth(displayedMonth, displayedYear);
-    let firstDay = getFirstDay();
-    let numberOfRows = Math.ceil((numberOfDays - (7 - firstDay)) / 7 ) + 1;
-    numberOfCards = numberOfRows * 7;
-  }
-  
-  
-  
+
+
   /*** *** DATABASE DEPENDENT RENDERERS *** ***/
   
   const addVesselSelections = () => {
