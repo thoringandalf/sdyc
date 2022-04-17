@@ -150,6 +150,40 @@ const populateReqCard = (id, reqType, vessel, styleCat) => {
   })
 }
 
+const initializeBoatBoxes = () => {
+	boats.get().then((boatsBatch) => {
+  	boatsBatch.forEach((boat) => {
+    	if(boat.data().Available) {
+      	e(`${boat.id.replace(/\s/g, '')}Box`).checked = true;
+      } else {
+      	e(`${boat.id.replace(/\s/g, '')}Box`).checked = false;
+      }
+    })
+  })
+}
+
+const initializeDayBoxes = () => {
+	boats.doc("Dragonfly").get().then((boat) => {
+  	let days = boat.data()["Available Days"];
+  	for(key in days) {
+    	if(days[key]) {
+      	e(key).checked = true
+      } else {
+      	e(key).checked = false
+      }
+    }
+  })
+}
+
+const initializePrices = () => {
+	boats.doc("Dragonfly").get().then((doc) => {
+  	let pricesMap = doc.data()["Charter Types"];
+    for(key in pricesMap) {
+    	e(key).value = pricesMap[key]
+    }
+  })
+}
+
 /*** *** DATABASE MANAGEMENT *** ***/
 
 const initializeRequests = () => {
@@ -225,6 +259,51 @@ const moveRequest = (req, vessel, docID, from, to) => {
   	boats.doc(vessel).collection(from).doc(docID).delete()
   }).then(() => {
   	location.reload();
+  })
+}
+
+const updatePrices = () => {
+	let data = {
+  	"2-hr": 0,
+    "3-hr": 0,
+    "4-hr": 0,
+    "Sunset": 0
+  }
+  let prices = document.querySelectorAll('.priceinput');
+  prices.forEach((input) => {
+  	data[input.id] = parseInt(input.value)
+  })
+  boats.doc("Dragonfly").update({
+  	"Charter Types": data
+  }).then(() => { initializePrices() })
+}
+
+const updateDaysBoxes = () => {
+  let data = {
+    MON: null,
+    TUE: null,
+    WED: null,
+    THU: null,
+    FRI: null,
+    SAT: null,
+    SUN: null
+  }
+  let boxes = document.querySelectorAll(".daysbox");
+  boxes.forEach((box) => {
+    data[box.id] = box.checked
+  })
+  boats.doc("Dragonfly").update({ "Available Days": data }).then(() => {
+  	initializeDayBoxes()
+  })
+}
+
+const updateBoatBoxes = () => {
+	boats.get().then((boatsBatch) => {
+  	boatsBatch.forEach((boat) => {
+    	boats.doc(boat.id).update({
+      	Available: e(`${boat.id.replace(/\s/g, '')}Box`).checked
+      }).then(() => { initializeBoatBoxes() })
+    })
   })
 }
 
