@@ -1,4 +1,19 @@
 <script>
+	
+/*** *** INITIALIZE DATABASE *** ***/
+	
+let fbConfig = { 
+  apiKey: "AIzaSyCKglbCZu9tlbuuTDII5K5BbMC1j1cYC_I",
+  authDomain: "sdyc-v2.firebaseapp.com",
+  projectId: "sdyc-v2",
+  storageBucket: "sdyc-v2.appspot.com",
+  messagingSenderId: "468655640557",
+  appId: "1:468655640557:web:1ba009d1429f3a722121e4",
+  measurementId: "G-DWNFXV7GPY"
+}
+firebase.initializeApp(fbConfig);
+let db=firebase.firestore();
+const boats = db.collection("Boats");
 
 /*** *** DATABASE DEPENDENT RENDERERS *** ***/
 
