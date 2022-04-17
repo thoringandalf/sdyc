@@ -430,6 +430,7 @@ let fbConfig = {
   /*** *** DOM MANIPULATION *** ***/
   
   const switchSidebarTabs = (x) => {
+	  console.log("this ran")
     for (let i=0; i < 3; i++) {
       if (i === x) {
         e(`tab_${i}`).classList.add('tabselected');
