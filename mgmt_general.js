@@ -1,5 +1,3 @@
-<script>
-
 /*** *** CLIENT-SIDE UTILITY FUNCTIONS *** ***/
 
 const initializeDateVars = () => {
@@ -295,6 +293,3 @@ initializePrices();
 toggleDays(false);
 toggleBoats(false);
 togglePrices(false);
-
-
-</script>
