@@ -159,7 +159,7 @@ const changeCapacitySelections = () => {
   }
   boats.doc(e("vessel").options[e("vessel").selectedIndex].text).get().then((doc) => {
     let boat = doc.data();
-    for(let i=0; i<boat["Max Capacity"]; i++) {
+    for(let i=0; i < boat["Max Capacity"]; i++) {
       let option = document.createElement("option");
       option.innerHTML = i+1;
       option.value = i+1;
