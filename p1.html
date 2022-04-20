@@ -96,14 +96,12 @@ const addVesselSelections = () => {
     while (e("vessel").childElementCount > 3) {
         e("vessel").removeChild(e("vessel").lastChild)
     }
-    boats.where("Available", "==", true).get().then((documents) => {
+    boats.where("Available", "==", true).orderBy("Priority").get().then((documents) => {
         documents.forEach((doc) => {
-            if (doc.id != "Dragonfly" && doc.id != "Sundancer") {
-                let option = document.createElement("option");
-                option.innerHTML = doc.id;
-                option.value = doc.id;
-                e("vessel").appendChild(option);
-            }
+            let option = document.createElement("option");
+            option.innerHTML = doc.id;
+            option.value = doc.id;
+            e("vessel").appendChild(option);
         })
     })
 }
